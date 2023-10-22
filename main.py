@@ -18,7 +18,19 @@ def is_sorted(lyst):
     return True
 
 def main():
-    pass
-  
+    slist = SList()
+    slist.insert(value= Course(number=2))
+    slist.insert(value=Course(number=3))
+    slist.insert(value=Course())
+    slist.insert(value=Course())
+    slist.insert(value=Course())
+    
+    gpa = calculate_gpa(slist)
+    print(gpa)
+
+    sorted = is_sorted(slist)
+    print(sorted)
+
+
 if __name__ == "__main__":
     main()
