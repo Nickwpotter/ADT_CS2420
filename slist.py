@@ -12,7 +12,7 @@ class SList:
     '''Insert a new value in the list. Maintain nondecreasing ordering of elements'''
     def insert(self, value):
         self.new_node = self.SListNode(value=value)
-        if self._head is None or (self.new_node.value < self._head.value):
+        if self._head is None or self.new_node.value < self._head.value:
             temp = self._head
             self.new_node.next = temp
             self._head = self.new_node
@@ -28,29 +28,30 @@ class SList:
     '''Search for a value in the list, return it if found, None otherwise'''
     def find(self, value):
         for item in self:
-            if item.value == value:
-                return item.value
+            if item == value:
+                return item
         return None
                 
     '''Remove the first occurance of value.'''
     def remove(self, value):
         self._current = self._head
-        if self._head.value == value:
-            self._head = self._head.next
-        else:
-            for item in self:
-                if item.next is not None:
-                    if item.next.value == value:
-                        item.next = item.next.next
-                        self._size -= 1
-                        return True
+        prev = self._current
+        while self._current is not None:
+            if self._current.value == value:
+                if prev is self._current:
+                    self._head = self._head.next
+                else:
+                    prev.next = self._current.next
+                return True
+            prev = self._current
+            self._current = self._current.next
         return False
 
 
     '''Remove all instances of value'''
     def remove_all(self, value):
         for item in self:
-            if item.value == value:
+            if item == value:
                 self.remove(value)
         
 
@@ -83,7 +84,7 @@ class SList:
             raise StopIteration
         item = self._current
         self._current = self._current.next
-        return item
+        return item.value
     
     '''Return the item at the given index, or throw an exception if invalid index'''
     def __getitem__(self, index):
@@ -103,3 +104,7 @@ class SList:
         for item in self:
             cnt+=1
         return cnt
+    
+    def print_all(self):
+        for item in self:
+            print(item.value)
